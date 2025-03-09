@@ -83,7 +83,7 @@ R = v_0 \cos(\theta) \cdot \frac{2v_0 \sin(\theta)}{g} = \frac{v_0^2 \sin(2\thet
 ### Python Simulation
 
 Below is a Python script to simulate projectile motion and visualize the range as a function of the angle of projection.
-
+![alt text](image-1.png)
 ```python
 import numpy as np
 import matplotlib.pyplot as plt
@@ -110,5 +110,3 @@ plt.title('Range vs Angle of Projection')
 plt.legend()
 plt.grid(True)
 plt.show()
-![alt text](image.png)
-![image](https://github.com/user-attachments/assets/7434a27d-f98d-4c94-b3fb-adf5daef3233)
