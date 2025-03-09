@@ -110,3 +110,6 @@ plt.title('Range vs Angle of Projection')
 plt.legend()
 plt.grid(True)
 plt.show()
+
+
+[def]: image.png
