@@ -49,7 +49,7 @@ Resonance occurs when the driving frequency \(\omega\) matches the system’s na
 
 #### Computational Model
 Using Python, we numerically solve the forced damped pendulum equation using the Runge-Kutta method and visualize the results.
-
+![alt text](image-1.png)
 ```python
 import numpy as np
 import matplotlib.pyplot as plt
@@ -112,4 +112,3 @@ plt.show()
 
 This study bridges theoretical analysis and computational exploration, fostering a deeper understanding of forced and damped oscillatory phenomena in physics and engineering.
 
-![alt text](image-2.png)
