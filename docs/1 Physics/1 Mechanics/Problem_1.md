@@ -1,13 +1,12 @@
-# Problem 1
 # Investigating the Range as a Function of the Angle of Projection
 
 ## 1. Theoretical Foundation
 
 ### Governing Equations of Motion
 
-The motion of a projectile can be described by the following differential equations derived from Newton's second law:
+The motion of a projectile can be described using Newton's second law of motion. Assuming the only force acting on the projectile is gravity, the equations of motion in the horizontal (x) and vertical (y) directions are:
 
-- **Horizontal Motion (x-direction):**
+- **Horizontal Motion:**
   \[
   \frac{d^2x}{dt^2} = 0
   \]
@@ -17,99 +16,110 @@ The motion of a projectile can be described by the following differential equati
   \]
   where \( v_0 \) is the initial velocity and \( \theta \) is the angle of projection.
 
-- **Vertical Motion (y-direction):**
+- **Vertical Motion:**
   \[
   \frac{d^2y}{dt^2} = -g
   \]
-  where \( g \) is the acceleration due to gravity. The vertical velocity \( v_y \) is given by:
+  This implies that the vertical velocity \( v_y \) changes with time:
   \[
   v_y = v_0 \sin(\theta) - gt
   \]
+  where \( g \) is the acceleration due to gravity.
 
-The position of the projectile as a function of time \( t \) is:
-\[
-x(t) = v_0 \cos(\theta) \cdot t
-\]
-\[
-y(t) = v_0 \sin(\theta) \cdot t - \frac{1}{2}gt^2
-\]
+### General Solution
+
+The position of the projectile as a function of time \( t \) can be derived by integrating the velocity equations:
+
+- **Horizontal Position:**
+  \[
+  x(t) = v_0 \cos(\theta) \cdot t
+  \]
+
+- **Vertical Position:**
+  \[
+  y(t) = v_0 \sin(\theta) \cdot t - \frac{1}{2} g t^2
+  \]
 
 ### Family of Solutions
 
-The solutions to these equations depend on the initial conditions:
-- **Initial Velocity (\( v_0 \))**: Affects the magnitude of the velocity components.
-- **Angle of Projection (\( \theta \))**: Determines the direction of the initial velocity.
-- **Gravitational Acceleration (\( g \))**: Influences the vertical motion.
+The solutions form a family of parabolic trajectories, each corresponding to different initial conditions (e.g., \( v_0 \), \( \theta \), and \( g \)). The shape and range of the trajectory depend on these parameters.
 
-Varying these parameters leads to a family of parabolic trajectories.
+---
 
 ## 2. Analysis of the Range
 
-### Horizontal Range
+### Range as a Function of Angle
 
-The horizontal range \( R \) is the distance the projectile travels before hitting the ground. It can be derived by setting \( y(t) = 0 \) and solving for \( t \):
+The range \( R \) of a projectile is the horizontal distance it travels before hitting the ground. For a projectile launched from and landing at the same height (\( y = 0 \)), the range is given by:
 \[
-0 = v_0 \sin(\theta) \cdot t - \frac{1}{2}gt^2
-\]
-\[
-t = \frac{2v_0 \sin(\theta)}{g}
-\]
-Substituting this into the equation for \( x(t) \):
-\[
-R = v_0 \cos(\theta) \cdot \frac{2v_0 \sin(\theta)}{g} = \frac{v_0^2 \sin(2\theta)}{g}
+R = \frac{v_0^2 \sin(2\theta)}{g}
 \]
 
-### Dependence on Parameters
+- The range is maximized when \( \theta = 45^\circ \), as \( \sin(2\theta) \) reaches its maximum value of 1.
+- For angles \( \theta < 45^\circ \) or \( \theta > 45^\circ \), the range decreases symmetrically.
 
-- **Angle of Projection (\( \theta \))**: The range is maximized when \( \theta = 45^\circ \) because \( \sin(2\theta) \) reaches its maximum value of 1.
-- **Initial Velocity (\( v_0 \))**: The range increases with the square of the initial velocity.
-- **Gravitational Acceleration (\( g \))**: The range decreases as \( g \) increases.
+### Influence of Other Parameters
+
+- **Initial Velocity (\( v_0 \))**: The range increases quadratically with \( v_0 \).
+- **Gravitational Acceleration (\( g \))**: The range decreases inversely with \( g \).
+
+---
 
 ## 3. Practical Applications
 
 ### Real-World Scenarios
 
-- **Sports**: The trajectory of a soccer ball or a golf ball can be modeled using projectile motion.
-- **Engineering**: The design of rockets and missiles involves understanding projectile motion.
-- **Astrophysics**: The motion of celestial bodies can sometimes be approximated using projectile motion.
+- **Uneven Terrain:** If the projectile is launched from a height \( h \) above the landing point, the range equation becomes more complex and depends on \( h \).
+- **Air Resistance:** Drag forces can significantly alter the trajectory, reducing the range and changing the optimal angle of projection.
 
-### Extensions
-
-- **Uneven Terrain**: The model can be extended to account for varying launch and landing heights.
-- **Air Resistance**: Incorporating drag forces can make the model more realistic.
+---
 
 ## 4. Implementation
 
 ### Python Simulation
 
 Below is a Python script to simulate projectile motion and visualize the range as a function of the angle of projection.
-![alt text](image-1.png)
+![alt text](image-3.png)
 ```python
 import numpy as np
 import matplotlib.pyplot as plt
 
 # Constants
-g = 9.81  # gravitational acceleration (m/s^2)
-v0 = 30   # initial velocity (m/s)
-angles = np.linspace(0, 90, 100)  # angles from 0 to 90 degrees
+g = 9.81  # Gravitational acceleration (m/s^2)
+v0 = 50   # Initial velocity (m/s)
+angles = np.linspace(0, 90, 100)  # Angles from 0 to 90 degrees
 
-# Function to calculate range
+# Range function
 def calculate_range(v0, theta, g):
-    theta_rad = np.deg2rad(theta)
+    theta_rad = np.radians(theta)
     return (v0**2 * np.sin(2 * theta_rad)) / g
 
 # Calculate ranges
 ranges = [calculate_range(v0, angle, g) for angle in angles]
 
-# Plotting
+# Plot
 plt.figure(figsize=(10, 6))
-plt.plot(angles, ranges, label=f'v0 = {v0} m/s')
-plt.xlabel('Angle of Projection (degrees)')
-plt.ylabel('Range (m)')
-plt.title('Range vs Angle of Projection')
+plt.plot(angles, ranges, label="Range vs Angle")
+plt.xlabel("Angle of Projection (degrees)")
+plt.ylabel("Range (m)")
+plt.title("Range as a Function of the Angle of Projection")
+plt.grid()
 plt.legend()
-plt.grid(True)
 plt.show()
+```
 
+---
 
-[def]: image.png
+## 5. Discussion and Limitations
+
+### Assumptions
+- No air resistance.
+- Constant gravitational acceleration.
+- The launch and landing occur at the same height.
+
+### Possible Improvements
+- Incorporate air resistance for more realistic modeling.
+- Consider varying gravity for high-altitude or space-based launches.
+- Extend the model for launches from different heights.
+
+This model provides a foundational understanding of projectile motion but must be refined for high-precision applications.
