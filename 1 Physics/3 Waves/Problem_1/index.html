@@ -6,13 +6,13 @@
 <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <link href="../../../img/favicon.ico" rel="shortcut icon"/>
-<title>Problem 1 - Physics and Mathematics</title>
+<title>Interference Patterns on a Water Surface - Solutions - Physics and Mathematics</title>
 <link href="../../../css/theme.css" rel="stylesheet"/>
 <link href="../../../css/theme_extra.css" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" rel="stylesheet"/>
 <script>
         // Current page data
-        var mkdocs_page_name = "Problem 1";
+        var mkdocs_page_name = "Interference Patterns on a Water Surface - Solutions";
         var mkdocs_page_input_path = "1 Physics/3 Waves/Problem_1.md";
         var mkdocs_page_url = null;
       </script>
@@ -64,8 +64,12 @@
 </li>
 <li class="toctree-l1 current"><a class="reference internal current">3 Waves</a>
 <ul class="current">
-<li class="toctree-l2 current"><a class="reference internal current" href="#">Problem 1</a>
+<li class="toctree-l2 current"><a class="reference internal current" href="#">Interference Patterns on a Water Surface - Solutions</a>
 <ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="#wave-equation">Wave Equation</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#python-code-simulation">Python Code Simulation</a>
+</li>
 </ul>
 </li>
 </ul>
@@ -163,7 +167,7 @@
 <li><a aria-label="Docs" class="icon icon-home" href="../../.."></a></li>
 <li class="breadcrumb-item">1 Physics</li>
 <li class="breadcrumb-item">3 Waves</li>
-<li class="breadcrumb-item active">Problem 1</li>
+<li class="breadcrumb-item active">Interference Patterns on a Water Surface - Solutions</li>
 <li class="wy-breadcrumbs-aside">
 </li>
 </ul>
@@ -171,7 +175,63 @@
 </div>
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
-<h1 id="problem-1">Problem 1</h1>
+<h1 id="interference-patterns-on-a-water-surface-solutions"><strong>Interference Patterns on a Water Surface - Solutions</strong></h1>
+<h2 id="wave-equation"><strong>Wave Equation</strong></h2>
+<p>The wave equation for an individual wave emitted from a point source at <span class="arithmatex">\( (x_0, y_0) \)</span> is:</p>
+<div class="arithmatex">\[
+\eta(x,y,t) = \frac{A}{r} \cos(k r - \omega t + \phi)
+\]</div>
+<p>where:<br/>
+- $ A $ is the amplitude of the wave,<br/>
+- $ k = \frac{2\pi}{\lambda} $ is the wave number,<br/>
+- $ \omega = 2\pi f $ is the angular frequency,<br/>
+- $ r = \sqrt{(x - x_0)^2 + (y - y_0)^2} $ is the distance from the source,<br/>
+- $ \phi $ is the initial phase.  </p>
+<p>If multiple sources are placed at the vertices of a regular polygon, the total displacement at any point is the sum of the contributions from all sources:</p>
+<div class="arithmatex">\[
+\eta_{tot}(x,y,t) = \sum_{n=1}^{N} \eta_n(x,y,t)
+\]</div>
+<p>where $ N $ is the number of sources.</p>
+<hr/>
+<h2 id="python-code-simulation"><strong>Python Code Simulation</strong></h2>
+<p><img alt="" src="../image-3.png"/>
+The following Python code simulates the interference pattern by summing the wave equations from multiple point sources arranged in a regular polygon.</p>
+<p>```python
+import numpy as np
+import matplotlib.pyplot as plt</p>
+<h1 id="define-parameters">Define parameters</h1>
+<p>A = 1       # Amplitude
+lambda_ = 2 # Wavelength
+k = 2 * np.pi / lambda_  # Wave number
+f = 1       # Frequency
+omega = 2 * np.pi * f  # Angular frequency
+N = 6       # Number of sources (hexagon)
+R = 5       # Radius of polygon</p>
+<p>def wave_source(x, y, x0, y0, t):
+    r = np.sqrt((x - x0)<strong>2 + (y - y0)</strong>2)
+    return (A / (r + 1e-6)) * np.cos(k * r - omega * t)  # Avoid division by zero</p>
+<h1 id="grid-definition">Grid definition</h1>
+<p>x = np.linspace(-10, 10, 400)
+y = np.linspace(-10, 10, 400)
+X, Y = np.meshgrid(x, y)</p>
+<h1 id="define-source-locations">Define source locations</h1>
+<p>angles = np.linspace(0, 2*np.pi, N, endpoint=False)
+sources = [(R * np.cos(angle), R * np.sin(angle)) for angle in angles]</p>
+<p>def total_wave(X, Y, t):
+    wave = np.zeros_like(X)
+    for (x0, y0) in sources:
+        wave += wave_source(X, Y, x0, y0, t)
+    return wave</p>
+<h1 id="plot-the-interference-pattern">Plot the interference pattern</h1>
+<p>time = 0  # Fixed time snapshot
+Z = total_wave(X, Y, time)</p>
+<p>plt.figure(figsize=(8, 8))
+plt.contourf(X, Y, Z, levels=50, cmap='coolwarm')
+plt.colorbar(label='Wave Amplitude')
+plt.title('Interference Pattern from Multiple Wave Sources')
+plt.xlabel('x')
+plt.ylabel('y')
+plt.show()</p>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
