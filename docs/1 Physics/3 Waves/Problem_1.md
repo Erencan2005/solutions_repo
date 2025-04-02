@@ -25,7 +25,7 @@ where $ N $ is the number of sources.
 ---
 
 ## **Python Code Simulation**
-![](image-3.png)
+![](image-4.png)
 The following Python code simulates the interference pattern by summing the wave equations from multiple point sources arranged in a regular polygon.
 
 ```python
