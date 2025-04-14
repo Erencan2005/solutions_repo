@@ -172,6 +172,55 @@
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
 <h1 id="problem-2">Problem 2</h1>
+<h1 id="estimating-using-monte-carlo-methods">Estimating π Using Monte Carlo Methods</h1>
+<p>This document explains two methods for estimating π using Monte Carlo simulations: (1) Circle-based method, and (2) Buffon's Needle method. It includes theoretical foundations, Python code implementations, visualizations, and analysis.</p>
+<hr/>
+<h2 id="part-1-estimating-using-a-circle">Part 1: Estimating π Using a Circle</h2>
+<h3 id="1-theoretical-foundation">1. Theoretical Foundation</h3>
+<p>The method relies on the geometric relationship between a circle inscribed in a square. For a unit circle (radius = 1), the area of the circle is $ \pi r^2 = \pi \cdot 1^2 = \pi $, and the area of the square that bounds it is $ 4 \cdot 1^2 = 4 $. The ratio of the areas is therefore:</p>
+<div class="arithmatex">\[
+\frac{\text{Area of Circle}}{\text{Area of Square}} = \frac{\pi}{4}
+\]</div>
+<p>By generating random points uniformly within the square, the proportion of points that fall inside the circle approximates this ratio. Thus, we can estimate π as:</p>
+<div class="arithmatex">\[
+\pi \approx 4 \cdot \frac{\text{Number of Points Inside Circle}}{\text{Total Number of Points}}
+\]</div>
+<h4 id="derivation-for-a-unit-circle">Derivation for a Unit Circle:</h4>
+<ul>
+<li>A point <span class="arithmatex">\((x, y)\)</span> lies inside the unit circle if $ x^2 + y^2 \leq 1 $.</li>
+<li>The square has vertices at <span class="arithmatex">\((-1, -1)\)</span>, <span class="arithmatex">\((-1, 1)\)</span>, <span class="arithmatex">\((1, -1)\)</span>, and <span class="arithmatex">\((1, 1)\)</span>.</li>
+</ul>
+<h3 id="2-simulation">2. Simulation</h3>
+<p><img alt="alt text" src="../image-1.png"/>
+Below is the Python implementation for the circle-based Monte Carlo simulation.</p>
+<p>```python
+import numpy as np
+import matplotlib.pyplot as plt</p>
+<p>def estimate_pi(num_points):
+    # Generate random points in the square [-1, 1] x [-1, 1]
+    points = np.random.uniform(-1, 1, (num_points, 2))</p>
+<pre><code># Determine which points fall inside the unit circle
+distances = np.linalg.norm(points, axis=1)
+inside_circle = distances &lt;= 1
+
+# Estimate pi
+pi_estimate = 4 * np.mean(inside_circle)
+
+# Visualization
+plt.figure(figsize=(6, 6))
+plt.scatter(points[inside_circle, 0], points[inside_circle, 1], color='blue', s=1, label='Inside Circle')
+plt.scatter(points[~inside_circle, 0], points[~inside_circle, 1], color='red', s=1, label='Outside Circle')
+plt.axhline(0, color='black', linewidth=0.5)
+plt.axvline(0, color='black', linewidth=0.5)
+plt.gca().set_aspect('equal', adjustable='box')
+plt.title(f'Estimation of π: {pi_estimate:.4f}')
+plt.legend()
+plt.show()
+
+return pi_estimate
+</code></pre>
+<h1 id="run-the-simulation-with-10000-points">Run the simulation with 10,000 points</h1>
+<p>estimate_pi(10000)</p>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
