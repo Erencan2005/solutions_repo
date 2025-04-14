@@ -47,7 +47,7 @@ else:
 ![alt text](image.png)
 
 ```python
-import networkx as nx
+
 
 def equivalent_resistance(graph, source, target):
     """Calculate equivalent resistance between source and target nodes."""
