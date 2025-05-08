@@ -83,8 +83,6 @@
 <li class="toctree-l1 current"><a class="reference internal current">6 Statistics</a>
 <ul class="current">
 <li class="toctree-l2 current"><a class="reference internal current" href="#">Problem 1</a>
-<ul class="current">
-</ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../Problem_2/">Problem 2</a>
 </li>
@@ -171,75 +169,6 @@
 </div>
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
-<h1 id="problem-1">Problem 1</h1>
-<h1 id="exploring-the-central-limit-theorem-through-simulations">Exploring the Central Limit Theorem through Simulations</h1>
-<h2 id="table-of-contents">Table of Contents</h2>
-<ol>
-<li><strong>Introduction</strong></li>
-<li><strong>Simulating Sampling Distributions</strong></li>
-<li><strong>Sampling and Visualization</strong></li>
-<li><strong>Parameter Exploration</strong></li>
-<li><strong>Practical Applications</strong></li>
-<li><strong>Python Code Implementation</strong></li>
-</ol>
-<hr/>
-<h2 id="1-introduction">1. Introduction</h2>
-<p>The <strong>Central Limit Theorem (CLT)</strong> is a cornerstone of probability and statistics. It states that, given a sufficiently large sample size $ n $, the sampling distribution of the sample mean approaches a normal distribution, regardless of the shape of the original population distribution. Mathematically:</p>
-<div class="arithmatex">\[
-\bar{X} \sim \mathcal{N}\left(\mu, \frac{\sigma^2}{n}\right)
-\]</div>
-<p>where:
-- $ \bar{X} $: Sample mean
-- $ \mu $: Population mean
-- $ \sigma^2 $: Population variance
-- $ n $: Sample size</p>
-<p>In this exploration, we will simulate the CLT using various population distributions (Uniform, Exponential, Binomial) and observe how the sampling distribution of the sample mean converges to normality as $ n $ increases.</p>
-<hr/>
-<h2 id="2-simulating-sampling-distributions">2. Simulating Sampling Distributions</h2>
-<p>We will simulate data from the following population distributions:
-- Uniform Distribution
-- Exponential Distribution
-- Binomial Distribution</p>
-<p>For each distribution, we generate a large dataset representing the population.</p>
-<hr/>
-<h2 id="3-sampling-and-visualization">3. Sampling and Visualization</h2>
-<p>We randomly sample data from the population and calculate the sample mean for different sample sizes ($ n = 5, 10, 30, 50 $). This process is repeated multiple times to create a sampling distribution of the sample mean. Histograms are plotted to visualize the convergence to normality.</p>
-<hr/>
-<h2 id="4-parameter-exploration">4. Parameter Exploration</h2>
-<p>We investigate:
-- How the shape of the original distribution affects the rate of convergence.
-- The impact of the population's variance on the spread of the sampling distribution.</p>
-<hr/>
-<h2 id="5-practical-applications">5. Practical Applications</h2>
-<p>The CLT has numerous real-world applications, including:
-- Estimating population parameters with confidence intervals.
-- Quality control in manufacturing processes.
-- Predicting outcomes in financial models.</p>
-<hr/>
-<h2 id="6-python-code-implementation">6. Python Code Implementation</h2>
-<p><img alt="alt text" src="../image.png"/></p>
-<p>```python
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns</p>
-<h1 id="set-random-seed-for-reproducibility">Set random seed for reproducibility</h1>
-<p>np.random.seed(42)</p>
-<h1 id="function-to-simulate-sampling-distribution-of-the-sample-mean">Function to simulate sampling distribution of the sample mean</h1>
-<p>def simulate_clt(population, sample_sizes, num_samples=1000):
-    for n in sample_sizes:
-        sample_means = [np.mean(np.random.choice(population, size=n)) for _ in range(num_samples)]
-        plt.figure(figsize=(8, 4))
-        sns.histplot(sample_means, kde=True, bins=30, color='blue')
-        plt.title(f'Sampling Distribution (n={n})')
-        plt.xlabel('Sample Mean')
-        plt.ylabel('Frequency')
-        plt.show()</p>
-<h1 id="generate-populations">Generate populations</h1>
-<p>population_uniform = np.random.uniform(0, 1, size=100000)
-population_exponential = np.random.exponential(scale=1, size=100000)
-population_binomial = np.random.binomial(n=100, p=0.5, size=100000)</p>
-<h1 id="define-sample-sizes">Define sample sizes</h1>
-<p>sample_sizes = [5, 10</p>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
