@@ -6,13 +6,13 @@
 <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <link href="../../../img/favicon.ico" rel="shortcut icon"/>
-<title>Problem 2 - Physics and Mathematics</title>
+<title>Estimating \(\pi\) Using Monte Carlo Methods - Physics and Mathematics</title>
 <link href="../../../css/theme.css" rel="stylesheet"/>
 <link href="../../../css/theme_extra.css" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" rel="stylesheet"/>
 <script>
         // Current page data
-        var mkdocs_page_name = "Problem 2";
+        var mkdocs_page_name = "Estimating \\(\\pi\\) Using Monte Carlo Methods";
         var mkdocs_page_input_path = "1 Physics/6 Statistics/Problem_2.md";
         var mkdocs_page_url = null;
       </script>
@@ -84,8 +84,18 @@
 <ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../Problem_1/">📊 Exploring the Central Limit Theorem through Simulations</a>
 </li>
-<li class="toctree-l2 current"><a class="reference internal current" href="#">Problem 2</a>
+<li class="toctree-l2 current"><a class="reference internal current" href="#">Estimating \(\pi\) Using Monte Carlo Methods</a>
 <ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="#introduction">Introduction</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#part-1-estimating-pi-using-a-circle">PART 1: Estimating \(\pi\) Using a Circle</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#theoretical-foundation">Theoretical Foundation</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#python-simulation">Python Simulation</a>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -163,7 +173,7 @@
 <li><a aria-label="Docs" class="icon icon-home" href="../../.."></a></li>
 <li class="breadcrumb-item">1 Physics</li>
 <li class="breadcrumb-item">6 Statistics</li>
-<li class="breadcrumb-item active">Problem 2</li>
+<li class="breadcrumb-item active">Estimating \(\pi\) Using Monte Carlo Methods</li>
 <li class="wy-breadcrumbs-aside">
 </li>
 </ul>
@@ -171,56 +181,50 @@
 </div>
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
-<h1 id="problem-2">Problem 2</h1>
-<h1 id="estimating-using-monte-carlo-methods">Estimating π Using Monte Carlo Methods</h1>
-<p>This document explains two methods for estimating π using Monte Carlo simulations: (1) Circle-based method, and (2) Buffon's Needle method. It includes theoretical foundations, Python code implementations, visualizations, and analysis.</p>
+<h1 id="estimating-pi-using-monte-carlo-methods">Estimating <span class="arithmatex">\(\pi\)</span> Using Monte Carlo Methods</h1>
+<h2 id="introduction">Introduction</h2>
+<p>Monte Carlo methods use randomness to solve problems that may be deterministic in theory. A classic example is estimating the value of <span class="arithmatex">\(\pi\)</span> using either geometric probability (random points in a square) or Buffon's Needle experiment. Both methods demonstrate how probabilistic simulations can approximate mathematical constants.</p>
 <hr/>
-<h2 id="part-1-estimating-using-a-circle">Part 1: Estimating π Using a Circle</h2>
-<h3 id="1-theoretical-foundation">1. Theoretical Foundation</h3>
-<p>The method relies on the geometric relationship between a circle inscribed in a square. For a unit circle (radius = 1), the area of the circle is $ \pi r^2 = \pi \cdot 1^2 = \pi $, and the area of the square that bounds it is $ 4 \cdot 1^2 = 4 $. The ratio of the areas is therefore:</p>
+<h2 id="part-1-estimating-pi-using-a-circle">PART 1: Estimating <span class="arithmatex">\(\pi\)</span> Using a Circle</h2>
+<h3 id="theoretical-foundation">Theoretical Foundation</h3>
+<p>We inscribe a unit circle (radius = 1) inside a square of side length 2 (from -1 to 1 on both axes). The area of the circle is:</p>
 <div class="arithmatex">\[
-\frac{\text{Area of Circle}}{\text{Area of Square}} = \frac{\pi}{4}
+A_{\text{circle}} = \pi r^2 = \pi
 \]</div>
-<p>By generating random points uniformly within the square, the proportion of points that fall inside the circle approximates this ratio. Thus, we can estimate π as:</p>
+<p>The area of the square is:</p>
 <div class="arithmatex">\[
-\pi \approx 4 \cdot \frac{\text{Number of Points Inside Circle}}{\text{Total Number of Points}}
+A_{\text{square}} = (2)^2 = 4
 \]</div>
-<h4 id="derivation-for-a-unit-circle">Derivation for a Unit Circle:</h4>
-<ul>
-<li>A point <span class="arithmatex">\((x, y)\)</span> lies inside the unit circle if $ x^2 + y^2 \leq 1 $.</li>
-<li>The square has vertices at <span class="arithmatex">\((-1, -1)\)</span>, <span class="arithmatex">\((-1, 1)\)</span>, <span class="arithmatex">\((1, -1)\)</span>, and <span class="arithmatex">\((1, 1)\)</span>.</li>
-</ul>
-<h3 id="2-simulation">2. Simulation</h3>
-<p><img alt="alt text" src="image-1.png"/>
-Below is the Python implementation for the circle-based Monte Carlo simulation.</p>
-<p>```python
+<p>If we randomly generate points within the square, the proportion that falls inside the circle approximates the ratio of the areas:</p>
+<div class="arithmatex">\[
+\frac{\text{points in circle}}{\text{total points}} \approx \frac{\pi}{4}
+\]</div>
+<p>Thus, we estimate:</p>
+<div class="arithmatex">\[
+\pi \approx 4 \times \frac{\text{points in circle}}{\text{total points}}
+\]</div>
+<h3 id="python-simulation">Python Simulation</h3>
+<p><img alt="alt text" src="../image-2.png"/>
+```python
 import numpy as np
 import matplotlib.pyplot as plt</p>
-<p>def estimate_pi(num_points):
-    # Generate random points in the square [-1, 1] x [-1, 1]
-    points = np.random.uniform(-1, 1, (num_points, 2))</p>
-<pre><code># Determine which points fall inside the unit circle
-distances = np.linalg.norm(points, axis=1)
-inside_circle = distances &lt;= 1
-
-# Estimate pi
-pi_estimate = 4 * np.mean(inside_circle)
-
-# Visualization
-plt.figure(figsize=(6, 6))
-plt.scatter(points[inside_circle, 0], points[inside_circle, 1], color='blue', s=1, label='Inside Circle')
-plt.scatter(points[~inside_circle, 0], points[~inside_circle, 1], color='red', s=1, label='Outside Circle')
-plt.axhline(0, color='black', linewidth=0.5)
-plt.axvline(0, color='black', linewidth=0.5)
-plt.gca().set_aspect('equal', adjustable='box')
-plt.title(f'Estimation of π: {pi_estimate:.4f}')
+<p>def estimate_pi_circle(n_points):
+    x = np.random.uniform(-1, 1, n_points)
+    y = np.random.uniform(-1, 1, n_points)
+    inside_circle = x<strong>2 + y</strong>2 &lt;= 1
+    pi_estimate = 4 * np.sum(inside_circle) / n_points</p>
+<pre><code># Visualization
+plt.figure(figsize=(6,6))
+plt.scatter(x[inside_circle], y[inside_circle], s=1, color='blue', label='Inside Circle')
+plt.scatter(x[~inside_circle], y[~inside_circle], s=1, color='red', label='Outside Circle')
+circle = plt.Circle((0, 0), 1, color='black', fill=False)
+plt.gca().add_patch(circle)
+plt.gca().set_aspect('equal')
+plt.title(f'Estimating π with {n_points} points\nπ ≈ {pi_estimate:.6f}')
+plt.grid(True)
 plt.legend()
 plt.show()
-
-return pi_estimate
 </code></pre>
-<h1 id="run-the-simulation-with-10000-points">Run the simulation with 10,000 points</h1>
-<p>estimate_pi(10000)</p>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
